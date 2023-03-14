@@ -24,6 +24,11 @@ int main(int argv, char* argc[]){
         vertices++;
 
         int adjacency_matrix[vertices][vertices];
+        bool visited[vertices];
+
+        for(int i=0; i<vertices; i++){
+            visited[i] = false;
+        }
 
         for(int i = 0; i < vertices; i++){
             for(int j = 0; j < vertices; j++){

@@ -6,8 +6,7 @@
 #include <cstdlib>
 #include <chrono>
 #include <exception>
-//make function to put all the data reading code below
-//input the num variable to the corrisponding connections. this will be a function of itself
+
 using namespace std;
 using namespace chrono;
 

@@ -6,14 +6,14 @@
 #include <cstdlib>
 #include <chrono>
 #include <exception>
+#include "graphClass.h"
 
 using namespace std;
 using namespace chrono;
 
 int main(int argv, char* argc[]){
-
     try{
-        int vertices, edges, row, col, size = 10;
+        int vertices, edges, vertex1, vertex2, size = 10;
         char line[size];
         ifstream infile(argc[1]);
         if(infile.bad()){
@@ -21,20 +21,7 @@ int main(int argv, char* argc[]){
         }
 
         infile >> vertices >> edges;
-        vertices++;
-
-        int adjacency_matrix[vertices][vertices];
-        bool visited[vertices];
-
-        for(int i=0; i<vertices; i++){
-            visited[i] = false;
-        }
-
-        for(int i = 0; i < vertices; i++){
-            for(int j = 0; j < vertices; j++){
-                adjacency_matrix[i][j] = 0;
-            }
-        }  
+        Graph graph(vertices);
 
         while(!infile.eof()){
 
@@ -47,13 +34,13 @@ int main(int argv, char* argc[]){
 
             while(line[i]!='\n'){
                 if(line[i]=='-'){
-                    row = atoi(temp);
+                    vertex1 = atoi(temp);
                     delete [] temp;
                     temp = new char[size];
                     j = 0;
                 }
                 else if(line[i+1]=='\n'){
-                    col = atoi(temp);
+                    vertex2 = atoi(temp);
                     delete [] temp;
                     temp = nullptr;
                 }
@@ -63,8 +50,9 @@ int main(int argv, char* argc[]){
                 }
                 i++;
             }
-            adjacency_matrix[row][col] = 1;
             delete [] temp;
+            graph.addEdge(vertex1, vertex2);
+            graph.printVertexEdges(1);
             i=0;
             j=0;
         }

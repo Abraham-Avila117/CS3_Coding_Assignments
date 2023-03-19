@@ -6,30 +6,45 @@
 #include <cstdlib>
 #include <chrono>
 #include <exception>
-#include "graphClass.h"
+//#include "graphClass.h"
+#include "graphClass_2.h"
 
 using namespace std;
 using namespace chrono;
 
+void readFile(ifstream&, Graph_2&, int);
+
 int main(int argv, char* argc[]){
     try{
-        int vertices, edges, vertex1, vertex2, size = 10;
-        char line[size];
+        int vertices, size = 10;
+
         ifstream infile(argc[1]);
         if(infile.bad()){
             cerr << "File could not be read" << endl;
         }
 
-        infile >> vertices >> edges;
-        Graph graph(vertices);
+        infile >> vertices;
+        Graph_2 graph(vertices);
+        readFile(infile, graph, size);
+        graph.bfs(1, 5);
+    }   
+    catch(...) {
+        cerr << "Error in program. Please debug" << endl;
+    }    
 
-        while(!infile.eof()){
+    return 0;
+}
+
+void readFile(ifstream& infile, Graph_2& graph, int size){
+    char line[size];
+    int vertex1, vertex2;
+    char* temp;
+    while(!infile.eof()){
 
             infile >> line[0];
             infile.getline(&line[1], size-1);
-
             int i = 0, j = 0;
-            char* temp = new char[size];
+            temp = new char[size];
             assert(temp!=nullptr);
 
             while(line[i]!='\n'){
@@ -37,6 +52,7 @@ int main(int argv, char* argc[]){
                     vertex1 = atoi(temp);
                     delete [] temp;
                     temp = new char[size];
+                    assert(temp!=nullptr);
                     j = 0;
                 }
                 else if(line[i+1]=='\n'){
@@ -51,15 +67,10 @@ int main(int argv, char* argc[]){
                 i++;
             }
             delete [] temp;
+            temp = nullptr;
             graph.addEdge(vertex1, vertex2);
-            graph.printVertexEdges(1);
             i=0;
             j=0;
         }
-    }  
-    catch(...) {
-        cerr << "Error in program. Please debug" << endl;
-    }    
-
-    return 0;
+        infile.close();
 }

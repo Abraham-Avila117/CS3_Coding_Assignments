@@ -46,16 +46,9 @@ Graph_2::Graph_2(){
             
     }
 
-    visited = new bool[V];
-    assert(visited!=nullptr);
-    for(int i = 0; i < V; i++)
-        visited[i] = false; 
 
     shortestPath = new int[V];
-    assert(shortestPath!=nullptr);
-    for(int i = 0; i < V; i++)
-        shortestPath[i] = -1;
-    
+    visited = new bool[this->V];
 }
 
 Graph_2::Graph_2(int V){
@@ -73,14 +66,7 @@ Graph_2::Graph_2(int V){
     }
 
     visited = new bool[this->V];
-    assert(visited!=nullptr);
-    for(int i = 0; i < this->V; i++)
-        visited[i] = false;   
-
     shortestPath = new int[this->V];
-    assert(shortestPath!=nullptr);
-    for(int i = 0; i < this->V; i++)
-        shortestPath[i] = -1;
 
 }
 
@@ -90,7 +76,14 @@ void Graph_2::addEdge(int row, int col){
 }
 
 void Graph_2::bfs(int source, int destination){
-
+     
+    assert(visited!=nullptr);
+    for(int i = 0; i < V; i++)
+        visited[i] = false; 
+    assert(shortestPath!=nullptr);
+    for(int i = 0; i < V; i++)
+        shortestPath[i] = -1;
+    
     int row;
     queue.enqueue(source);
     visited[source] = true;

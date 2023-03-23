@@ -50,18 +50,15 @@ Graph_2::Graph_2(){
 
     visited = new bool[V];
     assert(visited!=nullptr);
-    for(int i = 0; i < V; i++)
-        visited[i] = false; 
+
 
     shortestPath = new int[V];
     assert(shortestPath!=nullptr);
-    for(int i = 0; i < V; i++)
-        shortestPath[i] = -1;
+
 
     path = new int[V];
     assert(path!=nullptr);
-    for(int i = 0; i < V; i++)
-        path[i] = -1;
+
 }
 
 Graph_2::Graph_2(int V){

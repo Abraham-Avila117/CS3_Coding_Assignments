@@ -29,6 +29,8 @@ private:
     int** adjacency_matrix;
     bool* visited;
     int* shortestPath;
+    int* path;
+    int pathInt = 0;
     Queue<int> queue;
 };
 
@@ -46,9 +48,20 @@ Graph_2::Graph_2(){
             
     }
 
+    visited = new bool[V];
+    assert(visited!=nullptr);
+    for(int i = 0; i < V; i++)
+        visited[i] = false; 
 
     shortestPath = new int[V];
-    visited = new bool[this->V];
+    assert(shortestPath!=nullptr);
+    for(int i = 0; i < V; i++)
+        shortestPath[i] = -1;
+
+    path = new int[V];
+    assert(path!=nullptr);
+    for(int i = 0; i < V; i++)
+        path[i] = -1;
 }
 
 Graph_2::Graph_2(int V){
@@ -66,8 +79,13 @@ Graph_2::Graph_2(int V){
     }
 
     visited = new bool[this->V];
-    shortestPath = new int[this->V];
+    assert(visited!=nullptr); 
 
+    shortestPath = new int[this->V];
+    assert(shortestPath!=nullptr);
+
+    path = new int[this->V];
+    assert(path!=nullptr);
 }
 
 void Graph_2::addEdge(int row, int col){
@@ -76,37 +94,68 @@ void Graph_2::addEdge(int row, int col){
 }
 
 void Graph_2::bfs(int source, int destination){
-     
-    assert(visited!=nullptr);
     for(int i = 0; i < V; i++)
         visited[i] = false; 
-    assert(shortestPath!=nullptr);
     for(int i = 0; i < V; i++)
         shortestPath[i] = -1;
-    
+    for(int i = 0; i < V; i++)
+        path[i] = -1;
+
     int row;
     queue.enqueue(source);
     visited[source] = true;
     shortestPath[source] = 0;
+    path[source] = destination;
 
     while(!queue.isEmpty()){
         row = queue.getFirst();
         queue.dequeue();
-        for(int i=0; i < V; i++){
+        for(int i = 0; i < V; i++){
             if(adjacency_matrix[row][i] == 1 && visited[i] == false){
+                queue.enqueue(i);
                 visited[i] = true;                
                 shortestPath[i] = shortestPath[row] + 1;
-                queue.enqueue(i);
+                path[i] = row;   
+                pathInt++; 
                 if(i == destination)
-                    printPath(destination);     
+                    printPath(destination);
             }
         }
     }
 }
 
 void Graph_2::printPath(int destination){
-    cout << "The path to destination is: " << endl;
+    cout << "The distance to destination is: " << endl;
     cout << shortestPath[destination] << endl;
+    cout << "the path from source to destination: " << endl;
+
+    int x = destination, pathPrint[V], i = 0;
+    pathPrint[i++]=destination;
+    while(path[x]!=destination){
+        pathPrint[i] = path[x];
+        x = path[x];
+        i++;
+    }
+    i--;
+    for(;i >=0; i--){
+        cout << pathPrint[i] << " ";
+    }
+    cout << endl;
+    /*
+    int x = destination, pathPrint[V], i = 0;
+    pathPrint[i++] = destination;
+    while(path[x]!=-1){
+        if(i > V)
+            break;
+        pathPrint[i] = path[x];
+        x = path[x];
+    }
+    for(; i >= 0; i--){
+        cout << pathPrint[i] << " ";
+    }
+    cout << endl;
+    */
+
 }
 
 int Graph_2::getV(){
@@ -142,6 +191,8 @@ Graph_2::~Graph_2(){
     
     delete [] shortestPath;
     shortestPath = nullptr;
+
+    queue.~Queue();
 }
 
 

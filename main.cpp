@@ -27,6 +27,9 @@ int main(int argv, char* argc[]){
         Graph_2 graph(vertices);
         readFile(infile, graph, size);
         graph.bfs(1, 5);
+        //graph.printMatrix();
+        //graph.~Graph_2();
+
     }   
     catch(...) {
         cerr << "Error in program. Please debug" << endl;

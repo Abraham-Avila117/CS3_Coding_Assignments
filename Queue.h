@@ -55,7 +55,8 @@ Queue<T>::Queue(T item){
 
 template<class T>
 void Queue<T>::enqueue(T item){
-        if(isInQueue(item)){
+
+    if(isInQueue(item)){
         cout << "item already in queue" << endl;
         return;
     }
@@ -86,6 +87,7 @@ void Queue<T>::dequeue(){
         Node<T>* temp = first;
         first = first->next;
         temp->next = nullptr;
+
         if(first == nullptr)
             last = nullptr;
         delete temp;

@@ -49,19 +49,13 @@ Graph_2::Graph_2(){
     }
 
     visited = new bool[V];
-    assert(visited!=nullptr);
-    for(int i = 0; i < V; i++)
-        visited[i] = false; 
+    assert(visited!=nullptr); 
 
     shortestPath = new int[V];
     assert(shortestPath!=nullptr);
-    for(int i = 0; i < V; i++)
-        shortestPath[i] = -1;
 
     path = new int[V];
     assert(path!=nullptr);
-    for(int i = 0; i < V; i++)
-        path[i] = -1;
 }
 
 Graph_2::Graph_2(int V){
@@ -141,21 +135,6 @@ void Graph_2::printPath(int destination){
         cout << pathPrint[i] << " ";
     }
     cout << endl;
-    /*
-    int x = destination, pathPrint[V], i = 0;
-    pathPrint[i++] = destination;
-    while(path[x]!=-1){
-        if(i > V)
-            break;
-        pathPrint[i] = path[x];
-        x = path[x];
-    }
-    for(; i >= 0; i--){
-        cout << pathPrint[i] << " ";
-    }
-    cout << endl;
-    */
-
 }
 
 int Graph_2::getV(){

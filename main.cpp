@@ -7,19 +7,21 @@
 #include <chrono>
 #include <exception>
 //#include "graphClass.h"
-#include "graphClass_3.h"
-//#include "graphClass_2.h"
+//#include "graphClass_3.h"
+#include "graphClass_2.h"
 
 using namespace std;
 using namespace chrono;
 
-void readFile(ifstream&, Graph_3&, int);
+void readFile(ifstream&, Graph_2&, int);
 bool checkNegative(int[], int);
 bool checkRange(int[], int, int);
-void printDestination(ofstream&, Graph_3&, int[], int);
+void printDestination(ofstream&, Graph_2&, int[], int);
 
 int main(int argv, char* argc[]){
-
+    time_t now = time(0);
+    char* dt = ctime(&now);
+    cout << "The local date and time is: " << dt << endl;
     try{
         auto start = high_resolution_clock::now();
         int vertices, size = 10, sources[3], sizeSource, destinatons[3], sizeDestination;
@@ -36,7 +38,7 @@ int main(int argv, char* argc[]){
         cerr.rdbuf(stream_buffer_outfile);
         
         infile >> vertices;
-        Graph_3 graph(vertices);
+        Graph_2 graph(vertices);
         readFile(infile, graph, size);
 
         sizeSource = sizeof(sources)/sizeof(int);
@@ -96,7 +98,7 @@ int main(int argv, char* argc[]){
     return 0;
 }
 
-void readFile(ifstream& infile, Graph_3& graph, int size){
+void readFile(ifstream& infile, Graph_2& graph, int size){
 
     char* str1, *str2;
     str1 = new char[size];
@@ -137,7 +139,7 @@ bool checkNegative(int check[], int size){
     return false;
 }
 
-void printDestination(ofstream& outfile, Graph_3& graph, int sources[], int destination){
+void printDestination(ofstream& outfile, Graph_2& graph, int sources[], int destination){
 
     streambuf* stream_buffer_cerr = cerr.rdbuf();
     streambuf* stream_buffer_outfile = outfile.rdbuf();

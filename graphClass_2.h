@@ -88,6 +88,8 @@ void Graph_2::addEdge(int row, int col){
 }
 
 void Graph_2::bfs(int source, int destination){
+    bool found_check = false;
+    auto timeStart = chrono::high_resolution_clock::now();
     for(int i = 0; i < V; i++)
         visited[i] = false; 
     for(int i = 0; i < V; i++)
@@ -112,10 +114,20 @@ void Graph_2::bfs(int source, int destination){
                 path[i] = row;   
                 pathInt++; 
                 if(i == destination)
+                {
+                    found_check = true;
+                    auto timeStop = chrono::high_resolution_clock::now();
                     printPath(destination);
+                    auto duration = chrono::duration_cast<chrono::nanoseconds>(timeStop - timeStart);
+                    cout <<"Breadth First Search Time Taken: "<< duration.count() << " nanosecounds" << endl;
+                }
             }
         }
     }
+    if (!found_check and source != destination)
+        cout<< "no path found."<<endl;
+    if(!found_check and source == destination)
+        cout << "Source is destinaion";
 }
 
 void Graph_2::printPath(int destination){

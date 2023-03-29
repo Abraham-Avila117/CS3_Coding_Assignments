@@ -18,7 +18,7 @@ public:
     Graph_2();
     Graph_2(int); //paramerterized for # of vertices
     void addEdge(int, int);
-    void bfs(int, int);
+   long long int bfs(int, int);
     void printPath(int);
     int getV();
     void printVertexEdges(int);
@@ -87,7 +87,8 @@ void Graph_2::addEdge(int row, int col){
         adjacency_matrix[row][col] = 1;       
 }
 
-void Graph_2::bfs(int source, int destination){
+long long int Graph_2::bfs(int source, int destination){
+    long long int r_Return = 0;
     bool found_check = false;
     auto timeStart = chrono::high_resolution_clock::now();
     for(int i = 0; i < V; i++)
@@ -119,15 +120,26 @@ void Graph_2::bfs(int source, int destination){
                     auto timeStop = chrono::high_resolution_clock::now();
                     printPath(destination);
                     auto duration = chrono::duration_cast<chrono::nanoseconds>(timeStop - timeStart);
-                    cout <<"Breadth First Search Time Taken: "<< duration.count() << " nanosecounds" << endl;
+                    r_Return = duration.count();
                 }
             }
         }
     }
-    if (!found_check and source != destination)
-        cout<< "no path found."<<endl;
-    if(!found_check and source == destination)
-        cout << "Source is destinaion";
+    if(!found_check && source == destination)
+    {
+        auto timeStop = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::nanoseconds>(timeStop - timeStart);
+        cout << "Source is destinaion" << endl;
+        r_Return = duration.count();
+    }
+    if (!found_check && source != destination)
+    {
+        auto timeStop = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::nanoseconds>(timeStop - timeStart);
+        cout<< "no path found." << endl;
+        r_Return = duration.count();
+    }
+    return r_Return;
 }
 
 void Graph_2::printPath(int destination){

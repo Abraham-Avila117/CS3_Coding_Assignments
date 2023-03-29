@@ -22,6 +22,7 @@ int main(int argv, char* argc[]){
     time_t now = time(0);
     char* dt = ctime(&now);
     cout << "The local date and time is: " << dt << endl;
+
     try{
         auto start = high_resolution_clock::now();
         int vertices, size = 10, sources[3], sizeSource, destinatons[3], sizeDestination;
@@ -43,7 +44,9 @@ int main(int argv, char* argc[]){
 
         sizeSource = sizeof(sources)/sizeof(int);
         sizeDestination = sizeof(destinatons)/sizeof(int);
-
+        
+        cerr << "The local date and time is: " << dt << endl;
+        
         cout << "Provide 3 sources: ";
         cin >> sources[0] >> sources[1] >> sources[2];
         cout << endl;
@@ -146,28 +149,20 @@ void printDestination(ofstream& outfile, Graph_2& graph, int sources[], int dest
     cerr.rdbuf(stream_buffer_outfile);
 
     cout << "Shortest path from vertex " << sources[0] << " to " << destination << ":\n";
-    auto start = high_resolution_clock::now();
-    graph.bfs(sources[0], destination);
-    auto stop = high_resolution_clock::now();
-    auto duration_nano = duration_cast<nanoseconds>(stop - start);
+    long long int Time_nano1 = graph.bfs(sources[0], destination);
     cerr << "The time from " << sources[0] << " to " << destination <<
-    " is " << duration_nano.count() << "ns" << endl;
+    " is " << Time_nano1 << "ns" << endl;
 
-    cout << "Shortest path from vertex " << sources[1] << " to " << destination << ":\n"; 
-    auto start2 = high_resolution_clock::now();
-    graph.bfs(sources[1], destination);
-    auto stop2 = high_resolution_clock::now();
-    auto duration_nano2 = duration_cast<nanoseconds>(stop2 - start2);
+    cout << "Shortest path from vertex " << sources[1] << " to " << destination << ":\n";
+    
+    long long int Time_nano2 = graph.bfs(sources[1], destination);
     cerr << "The time from " << sources[1] << " to " << destination <<
-    " is " << duration_nano2.count() << "ns" << endl;
+    " is " << Time_nano2 << "ns" << endl;
 
     cout << "Shortest path from vertex " << sources[2] << " to " << destination << ":\n";
-    auto start3 = high_resolution_clock::now(); 
-    graph.bfs(sources[2], destination);
-    auto stop3 = high_resolution_clock::now();
-    auto duration_nano3 = duration_cast<nanoseconds>(stop3 - start3);
+    long long int Time_nano3 = graph.bfs(sources[2], destination);
     cerr << "The time from " << sources[2] << " to " << destination <<
-    " is " << duration_nano3.count() << "ns" << endl;
+    " is " << Time_nano3 << "ns" << endl;
     cout << endl;
 }
 

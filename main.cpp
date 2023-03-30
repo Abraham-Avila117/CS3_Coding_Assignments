@@ -149,18 +149,26 @@ void printDestination(ofstream& outfile, Graph_2& graph, int sources[], int dest
     cerr.rdbuf(stream_buffer_outfile);
 
     cout << "Shortest path from vertex " << sources[0] << " to " << destination << ":\n";
+    graph.reinitalizer();
     long long int Time_nano1 = graph.bfs(sources[0], destination);
+    cout << "The time from " << sources[0] << " to " << destination <<
+    " is " << Time_nano1 << "ns" << endl;
     cerr << "The time from " << sources[0] << " to " << destination <<
     " is " << Time_nano1 << "ns" << endl;
 
     cout << "Shortest path from vertex " << sources[1] << " to " << destination << ":\n";
-    
+    graph.reinitalizer();
     long long int Time_nano2 = graph.bfs(sources[1], destination);
+    cout << "The time from " << sources[1] << " to " << destination <<
+    " is " << Time_nano2 << "ns" << endl;
     cerr << "The time from " << sources[1] << " to " << destination <<
     " is " << Time_nano2 << "ns" << endl;
 
     cout << "Shortest path from vertex " << sources[2] << " to " << destination << ":\n";
+    graph.reinitalizer();
     long long int Time_nano3 = graph.bfs(sources[2], destination);
+    cout << "The time from " << sources[2] << " to " << destination <<
+    " is " << Time_nano3 << "ns" << endl;
     cerr << "The time from " << sources[2] << " to " << destination <<
     " is " << Time_nano3 << "ns" << endl;
     cout << endl;

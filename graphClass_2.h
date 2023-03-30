@@ -23,6 +23,7 @@ public:
     int getV();
     void printVertexEdges(int);
     void printMatrix();
+    void reinitalizer();
     ~Graph_2();
 private:
     int V; //number of vertices
@@ -30,7 +31,6 @@ private:
     bool* visited;
     int* shortestPath;
     int* path;
-    int pathInt = 0;
     Queue<int> queue;
 };
 
@@ -90,19 +90,21 @@ void Graph_2::addEdge(int row, int col){
 long long int Graph_2::bfs(int source, int destination){
     long long int r_Return = 0;
     bool found_check = false;
-    auto timeStart = chrono::high_resolution_clock::now();
-    for(int i = 0; i < V; i++)
-        visited[i] = false; 
-    for(int i = 0; i < V; i++)
-        shortestPath[i] = -1;
-    for(int i = 0; i < V; i++)
-        path[i] = -1;
 
     int row;
     queue.enqueue(source);
     visited[source] = true;
     shortestPath[source] = 0;
     path[source] = destination;
+    auto timeStart = chrono::high_resolution_clock::now();
+
+    if(source == destination)
+    {
+        auto timeStop = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::nanoseconds>(timeStop - timeStart);
+        cout << "Source is destination" << endl;
+        r_Return = duration.count();
+    }
 
     while(!queue.isEmpty()){
         row = queue.getFirst();
@@ -113,32 +115,22 @@ long long int Graph_2::bfs(int source, int destination){
                 visited[i] = true;                
                 shortestPath[i] = shortestPath[row] + 1;
                 path[i] = row;   
-                pathInt++; 
-                if(i == destination)
-                {
-                    found_check = true;
+                if(i == destination){
                     auto timeStop = chrono::high_resolution_clock::now();
                     printPath(destination);
                     auto duration = chrono::duration_cast<chrono::nanoseconds>(timeStop - timeStart);
                     r_Return = duration.count();
+                    return r_Return;
                 }
             }
         }
     }
-    if(!found_check && source == destination)
-    {
-        auto timeStop = chrono::high_resolution_clock::now();
-        auto duration = chrono::duration_cast<chrono::nanoseconds>(timeStop - timeStart);
-        cout << "Source is destinaion" << endl;
-        r_Return = duration.count();
-    }
-    if (!found_check && source != destination)
-    {
-        auto timeStop = chrono::high_resolution_clock::now();
-        auto duration = chrono::duration_cast<chrono::nanoseconds>(timeStop - timeStart);
-        cout<< "no path found." << endl;
-        r_Return = duration.count();
-    }
+
+    auto timeStop = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::nanoseconds>(timeStop - timeStart);
+    cout<< "no path found." << endl;
+    r_Return = duration.count();
+    
     return r_Return;
 }
 
@@ -178,6 +170,16 @@ void Graph_2::printMatrix(){
         }
         cout << endl;
     }
+}
+
+void Graph_2::reinitalizer(){
+    queue.~Queue();
+    for(int i = 0; i < V; i++)
+        visited[i] = false; 
+    for(int i = 0; i < V; i++)
+        shortestPath[i] = -1;
+    for(int i = 0; i < V; i++)
+        path[i] = -1;
 }
 
 Graph_2::~Graph_2(){

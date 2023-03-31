@@ -85,11 +85,14 @@ int main(int argv, char* argc[]){
         }else{
             cout << "\tDestination 1: ";
             cin >> destinatons[0];
+            cerr << "First Destination: " << destinatons[0] << endl;
             printDestination(outfile, graph, sources, destinatons[0]);
             cout << "\tDestination 2: ";
+            cerr << "Second Destination: " << destinatons[1] << endl;
             cin >> destinatons[1];
             printDestination(outfile, graph, sources, destinatons[1]);
             cout << "\tDestination 3: ";
+            cerr << "Third Destination: " << destinatons[2] << endl;
             cin >> destinatons[2];
             printDestination(outfile, graph, sources, destinatons[2]);
         }

@@ -19,7 +19,7 @@ public:
     Graph_2(int); //paramerterized for # of vertices
     void addEdge(int, int);
    long long int bfs(int, int);
-    void printPath(int);
+    void printPath(int,ofstream&);
     int getV();
     void printVertexEdges(int);
     void printMatrix();
@@ -89,7 +89,6 @@ void Graph_2::addEdge(int row, int col){
 
 long long int Graph_2::bfs(int source, int destination){
     long long int r_Return = 0;
-    bool found_check = false;
 
     int row;
     queue.enqueue(source);
@@ -117,7 +116,6 @@ long long int Graph_2::bfs(int source, int destination){
                 path[i] = row;   
                 if(i == destination){
                     auto timeStop = chrono::high_resolution_clock::now();
-                    printPath(destination);
                     auto duration = chrono::duration_cast<chrono::nanoseconds>(timeStop - timeStart);
                     r_Return = duration.count();
                     return r_Return;
@@ -134,10 +132,18 @@ long long int Graph_2::bfs(int source, int destination){
     return r_Return;
 }
 
-void Graph_2::printPath(int destination){
+void Graph_2::printPath(int destination, ofstream& out){
+    streambuf* stream_buffer_cerr = cerr.rdbuf();
+    streambuf* stream_buffer_out = out.rdbuf();
+    cerr.rdbuf(stream_buffer_out);
+
     cout << "The distance to destination is: " << endl;
     cout << shortestPath[destination] << endl;
     cout << "the path from source to destination: " << endl;
+
+    cerr << "The distance to destination is: " << endl;
+    cerr << shortestPath[destination] << endl;
+    cerr << "the path from source to destination: " << endl;
 
     int x = destination, pathPrint[V], i = 0;
     pathPrint[i++]=destination;
@@ -149,8 +155,10 @@ void Graph_2::printPath(int destination){
     i--;
     for(;i >=0; i--){
         cout << pathPrint[i] << " ";
+        cerr << pathPrint[i] << " ";
     }
     cout << endl;
+    cerr << endl;
 }
 
 int Graph_2::getV(){

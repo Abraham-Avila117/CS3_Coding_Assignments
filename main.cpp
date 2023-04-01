@@ -1,3 +1,23 @@
+/*
+Program designed and developed by Abraham Avila, Arin Hartung, and Connor Thomas
+
+Class: Intro To Algorithms (CS3)
+
+Professor: Antoun Sherine
+
+Description:
+The following program takes in a txt-file with highest vertex plus one and 
+takes in the adjacency list below into an adjacency matrix. The adjacency 
+matrix tracks the entire graph. The class Graph_2 stores the adjacency matrix 
+along with three other array to track when a node is visited, the shorest distance
+(shortestPath), and the shorest path (path). All of these are dynamically allocated and 
+the function bfs within the class retreieve shortest path and distance from on source
+to a destination using queues to accomplish the task. The program takes in three inputs
+from the user then outputs every time the user provides a desired destination to the 
+screen and to a file.  
+
+*/
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -6,8 +26,6 @@
 #include <cstdlib>
 #include <chrono>
 #include <exception>
-//#include "graphClass.h"
-//#include "graphClass_3.h"
 #include "graphClass_2.h"
 
 using namespace std;
@@ -53,7 +71,7 @@ int main(int argv, char* argc[]){
 
         cout.rdbuf(stream_buffer_outfile);
         cout << "Provide 3 sources: " 
-        << sources[0] << " " << sources[1] << " " << sources[2] << endl;
+        << sources[0] << " " << sources[1] << " " << sources[2] << endl << endl;
         cout.rdbuf(stream_buffer_cout);
 
         if(checkNegative(sources, sizeSource)){
@@ -73,7 +91,7 @@ int main(int argv, char* argc[]){
             cout << "Input error: look into log.txt in your local directory" << endl;
             cerr << "Invalid input: out of node range" << endl;
             for(int i = 0; i < sizeSource; i++){
-                if(sources[i]>vertices)
+                if(sources[i]>=vertices)
                     cerr << " [" << sources[i] << "] ";
                 else
                 cerr << " " << sources[i];
@@ -88,13 +106,17 @@ int main(int argv, char* argc[]){
             cerr << "First Destination: " << destinatons[0] << endl;
             printDestination(outfile, graph, sources, destinatons[0]);
             cout << "\tDestination 2: ";
-            cerr << "Second Destination: " << destinatons[1] << endl;
             cin >> destinatons[1];
+            cerr << "Second Destination: " << destinatons[1] << endl;
             printDestination(outfile, graph, sources, destinatons[1]);
             cout << "\tDestination 3: ";
-            cerr << "Third Destination: " << destinatons[2] << endl;
             cin >> destinatons[2];
+            cerr << "Third Destination: " << destinatons[2] << endl;
             printDestination(outfile, graph, sources, destinatons[2]);
+            auto stop = high_resolution_clock::now();
+            auto duration_sec = duration_cast<seconds>(stop - start);
+            cerr << endl << "Overall runtime of program: " << duration_sec.count() << "s" << endl;
+
         }
     }   
     catch(...) {
@@ -154,6 +176,7 @@ void printDestination(ofstream& outfile, Graph_2& graph, int sources[], int dest
     cout << "Shortest path from vertex " << sources[0] << " to " << destination << ":\n";
     graph.reinitalizer();
     long long int Time_nano1 = graph.bfs(sources[0], destination);
+    graph.printPath(destination, outfile);
     cout << "The time from " << sources[0] << " to " << destination <<
     " is " << Time_nano1 << "ns" << endl;
     cerr << "The time from " << sources[0] << " to " << destination <<
@@ -162,6 +185,7 @@ void printDestination(ofstream& outfile, Graph_2& graph, int sources[], int dest
     cout << "Shortest path from vertex " << sources[1] << " to " << destination << ":\n";
     graph.reinitalizer();
     long long int Time_nano2 = graph.bfs(sources[1], destination);
+    graph.printPath(destination, outfile);
     cout << "The time from " << sources[1] << " to " << destination <<
     " is " << Time_nano2 << "ns" << endl;
     cerr << "The time from " << sources[1] << " to " << destination <<
@@ -170,17 +194,18 @@ void printDestination(ofstream& outfile, Graph_2& graph, int sources[], int dest
     cout << "Shortest path from vertex " << sources[2] << " to " << destination << ":\n";
     graph.reinitalizer();
     long long int Time_nano3 = graph.bfs(sources[2], destination);
+    graph.printPath(destination, outfile);
     cout << "The time from " << sources[2] << " to " << destination <<
     " is " << Time_nano3 << "ns" << endl;
     cerr << "The time from " << sources[2] << " to " << destination <<
-    " is " << Time_nano3 << "ns" << endl;
+    " is " << Time_nano3 << "ns" << endl << endl;
     cout << endl;
 }
 
 bool checkRange(int check[], int size, int vertices){
     
     for(int i = 0; i < size; i++){
-        if(check[i]>vertices)
+        if(check[i]>=vertices)
             return true;
     }
     return false;

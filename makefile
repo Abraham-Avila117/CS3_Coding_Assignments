@@ -1,21 +1,16 @@
-CXX = g++
-CXXFLAGS = -c -g -Wall -std=c++17
+all: bfs
 
-SRCS = main.cpp Queue.h graphClass_2.h
-OBJS = $(SRCS:.cpp=.o)
+bfs: main.o 
+	clang++ main.o -o bfs
 
-TARGET = program
+main.o: main.cpp
+	clang++ -c main.cpp
 
-all: $(TARGET)
+run:
+	./bfs paths.txt
 
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGET)
+clean: 
+	rm -f *.o
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-run: $(TARGET)
-	./$(TARGET)
-
-clean:
-	rm -f $(OBJS) $(TARGET)
+pclean:
+	rm -f bfs

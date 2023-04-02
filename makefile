@@ -1,16 +1,22 @@
-all: bfs
+CC = clang++
+PROGRAM = bfs
+CFLAGS = -c
+CPPFILES = main.cpp
+FILE = paths.txt
 
-bfs: main.o 
-	clang++ main.o -o bfs
+all: $(PROGRAM)
 
-main.o: main.cpp
-	clang++ -c main.cpp
+$(PROGRAM): main.o 
+	$(CC) main.o -o $(PROGRAM)
 
-run:
-	./bfs paths.txt
+main.o: $(CPPFILES)
+	$(CC) $(CFLAGS) $(CPPFILES)
+
+run: 
+	./$(PROGRAM) $(FILE)
 
 clean: 
 	rm -f *.o
 
 pclean:
-	rm -f bfs
+	rm -f $(PROGRAM)
